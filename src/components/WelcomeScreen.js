@@ -53,7 +53,7 @@ class WelcomeScreen extends Component {
   }
 
   render() {
-    const { posts, votePost } = this.props
+    const { posts, votePost, fetchAllPosts } = this.props
     return <div>
       {posts.map(post => (
         <SinglePost key={post.id} post={post} votePost={votePost} fetchAllPosts={fetchAllPosts} />
@@ -69,4 +69,4 @@ function mapStateToProps({ posts }, { match }) {
   }
 }
 
-export default connect(mapStateToProps, {fetchAllPosts,fetchCommentForPost, votePost})(WelcomeScreen)
+export default connect(mapStateToProps, {fetchAllPosts, votePost})(WelcomeScreen)
