@@ -29,7 +29,7 @@ function fetchCommentForPost(parentId) {
 class SinglePost extends Component {
 
   componentDidMount() {
-    this.props.fetchCommentForPost(this.props.post.id)
+   fetchCommentForPost(this.props.post.id)
  }
 
   onPostDelete = () => {
@@ -87,4 +87,4 @@ function mapStateToProps({ comments }, { post }) {
   }
 }
 
-export default connect(mapStateToProps,{fetchCommentForPost, deletePost})(SinglePost)
+export default connect(mapStateToProps,{deletePost})(SinglePost)
