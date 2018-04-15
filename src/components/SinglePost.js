@@ -9,6 +9,13 @@ function formatTimestamp(timestamp) {
   const d = new Date(timestamp)
   return d.toLocaleString()
 }
+
+const deletePost = (postId, callback) => {
+  return dispatch => {
+    API.deletePost(postId).then(() => callback())
+    dispatch({ type: 'DELETE_POST', postId })
+  }
+}
  
 function fetchCommentForPost(parentId) {
   return (dispatch) => {
@@ -22,12 +29,16 @@ function fetchCommentForPost(parentId) {
 class SinglePost extends Component {
 
   componentDidMount() {
-    fetchCommentForPost(this.props.post.id)
+    this.props.fetchCommentForPost(this.props.post.id)
+ }
+
+  onPostDelete = () => {
+    const id = this.props.post.id
+    this.props.deletePost(id, () => { })
   }
 
   render() {
-    const { post, comments, votePost, fetchAllPosts } = this.props
-
+    const { post, comments, votePost, fetchAllPosts, deletePost } = this.props
 
     return (
       <div>
@@ -51,6 +62,10 @@ class SinglePost extends Component {
               </div>
               <div className="post-likes-comments">
                 {post.voteScore} votes {comments && comments ? comments.length : 0} comments
+                <Link to={`/${post.category}/${post.id}/edit`}>
+                <button>Edit</button>
+                </Link>
+                <button onClick={(e) => this.onPostDelete(e)}>Delete</button>
               </div>
             </div>
             <div>
@@ -66,9 +81,10 @@ class SinglePost extends Component {
 }
 
 function mapStateToProps({ comments }, { post }) {
+	
   return {
     comments: comments[post.id]
   }
 }
 
-export default SinglePost
+export default connect(mapStateToProps,{fetchCommentForPost, deletePost})(SinglePost)
