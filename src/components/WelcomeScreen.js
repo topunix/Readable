@@ -11,6 +11,14 @@ const fetchAllPosts = () => {
     })
   }
 }
+ 
+const fetchCommentForPost = (parentId) => {
+  return (dispatch) => {
+    API.fetchComment(parentId).then(comments => {
+      dispatch({ type: 'FETCH_COMMENTS', parentId, comments })
+    })
+  }
+}
 
 const fetchPostsByCategory = (category) => {
   return (dispatch) => {
@@ -48,7 +56,7 @@ class WelcomeScreen extends Component {
     const { posts, votePost } = this.props
     return <div>
       {posts.map(post => (
-        <SinglePost key={post.id} post={post} votePost={votePost} fetchAllPosts={fetchAllPosts}/>
+        <SinglePost key={post.id} post={post} votePost={votePost} fetchAllPosts={fetchAllPosts} />
       ))}
     </div>
   }
@@ -61,4 +69,4 @@ function mapStateToProps({ posts }, { match }) {
   }
 }
 
-export default connect(mapStateToProps, {fetchAllPosts,votePost})(WelcomeScreen)
+export default connect(mapStateToProps, {fetchAllPosts,fetchCommentForPost, votePost})(WelcomeScreen)
