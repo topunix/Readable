@@ -7,12 +7,12 @@ import PostComment from './PostComment'
 import Approve from '../images/approve.png'
 import Disapprove from '../images/disapprove.png'
 
-export function formatTimestamp(timestamp) {
+function formatTimestamp(timestamp) {
   const d = new Date(timestamp)
   return d.toLocaleString()
 }
 
-export const fetchCommentForPost = (parentId) => {
+const fetchCommentForPost = (parentId) => {
   return (dispatch) => {
     API.fetchComment(parentId).then(comments => {
       dispatch({ type: 'FETCH_COMMENTS', parentId, comments })
@@ -20,7 +20,7 @@ export const fetchCommentForPost = (parentId) => {
   }
 }
 
-export const fetchAllPosts = () => {
+const fetchAllPosts = () => {
   return (dispatch) => {
     API.fetchPosts().then(posts => {
       dispatch({ type: 'FETCH_POSTS', posts })
@@ -28,14 +28,14 @@ export const fetchAllPosts = () => {
   }
 }
 
-export const deletePost = (postId, callback) => {
+const deletePost = (postId, callback) => {
   return dispatch => {
     API.deletePost(postId).then(() => callback())
     dispatch({ type: 'DELETE_POST', postId })
   }
 }
 
-export const votePost = (postId, option) => {
+const votePost = (postId, option) => {
   return (dispatch) => {
     API.votePost(postId, option).then(post => {
       dispatch({ type: 'VOTE_POST', postId, option })
