@@ -65,9 +65,6 @@ class EditPostForm extends Component {
               <textarea defaultValue={post.body} name="body" id="field5" className="field-long field-textarea"></textarea>
             </li>
             <button>Update</button>
-            <Link to={`/post/${post.id}`}>
-              <button>Cancel</button>
-            </Link>
           </ul>
         </form>
       </div>
